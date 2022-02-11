@@ -4,6 +4,7 @@
 const config = require('./utils/config');
 const express = require('express');
 const mongoose = require('mongoose');
+const employeesRouter = require('./routes/employees');
 
 // Express app
 const app = express();
@@ -19,9 +20,15 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
     console.error(`Error connecting to MongoDB: ${error.message}`);
   });
 
+/**
+ * Routes
+ */
+
 // Route for testing
 app.get('/ping', (req, res) => {
   res.end('pong');
 });
+
+app.use('/api/employees', employeesRouter);
 
 module.exports = app;
