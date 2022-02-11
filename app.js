@@ -21,6 +21,11 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
   });
 
 /**
+ * Middlewares for handling request/response objects
+ */
+app.use(express.json());
+
+/**
  * Routes
  */
 
