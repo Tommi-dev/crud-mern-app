@@ -70,6 +70,33 @@ describe('Get employees', () => {
 
 });
 
+describe('Add new customer', () => {
+
+  test('a valid employee can be added ', async () => {
+
+    const newEmployee = {
+      firstname: 'Matti',
+      lastname: 'Matikainen',
+      email: 'matti.m@ggmail.fi',
+      phone: '08-1234123'
+    };
+
+    await api
+      .post('/api/employees')
+      .send(newEmployee)
+      .expect(201)
+      .expect('Content-Type', /application\/json/);
+
+    const response = await api.get('/api/employees');
+    const firstnames = response.body.map(emp => emp.firstname);
+
+    expect(response.body).toHaveLength(initialEmployees.length + 1);
+    expect(firstnames).toContain('Matti');
+
+  });
+
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
