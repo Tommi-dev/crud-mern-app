@@ -95,6 +95,80 @@ describe('Add new customer', () => {
 
   });
 
+  test('fails with status code 400 if the resources are invalid', async () => {
+
+    const newEmployee = {
+      firstname: 'Teppo'
+    };
+
+    await api
+      .post('/api/employees')
+      .send(newEmployee)
+      .expect(400);
+
+    const response = await api.get('/api/employees');
+
+    expect(response.body).toHaveLength(initialEmployees.length);
+  });
+
+  test('fails with status code 400 if the resources are invalid format', async () => {
+
+    const newEmployee = {
+      firstname: 56,
+      lastname: 'Terhonen',
+      email: '56.t@ggmail.fi',
+      phone: '04-1234123'
+    };
+
+    await api
+      .post('/api/employees')
+      .send(newEmployee)
+      .expect(400);
+
+    const response = await api.get('/api/employees');
+
+    expect(response.body).toHaveLength(initialEmployees.length);
+  });
+
+  test('fails with status code 400 if the resources are invalid format', async () => {
+
+    const newEmployee = {
+      firstmmmm: 'Teppo',
+      lastname: 'Terhonen',
+      email: '56.t@ggmail.fi',
+      phone: '04-1234123'
+    };
+
+    await api
+      .post('/api/employees')
+      .send(newEmployee)
+      .expect(400);
+
+    const response = await api.get('/api/employees');
+
+    expect(response.body).toHaveLength(initialEmployees.length);
+  });
+
+  test('fails with status code 400 if too many properties', async () => {
+
+    const newEmployee = {
+      firstname: 'Teppo',
+      lastname: 'Terhonen',
+      email: '56.t@ggmail.fi',
+      phone: '04-1234123',
+      address: 'Wall Street'
+    };
+
+    await api
+      .post('/api/employees')
+      .send(newEmployee)
+      .expect(400);
+
+    const response = await api.get('/api/employees');
+
+    expect(response.body).toHaveLength(initialEmployees.length);
+  });
+
 });
 
 afterAll(() => {
