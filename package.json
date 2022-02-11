@@ -1,6 +1,6 @@
 {
   "name": "crud-mern-app",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "CRUD application with MERN stack",
   "main": "index.js",
   "private": true,
