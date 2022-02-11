@@ -6,6 +6,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const employeesRouter = require('./routes/employees');
 const morgan = require('morgan');
+const { errorHandler } = require('./utils/middleware');
 
 // Express app
 const app = express();
@@ -40,5 +41,10 @@ app.get('/ping', (req, res) => {
 });
 
 app.use('/api/employees', employeesRouter);
+
+/**
+ * Middlewares for handling errors
+ */
+app.use(errorHandler);
 
 module.exports = app;
