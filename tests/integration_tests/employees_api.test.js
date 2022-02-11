@@ -24,7 +24,7 @@ const initialEmployees = [
 
 ];
 
-beforeEach( async () => {
+beforeEach(async () => {
 
   await EmployeeModel.deleteMany({});
 
@@ -38,9 +38,34 @@ beforeEach( async () => {
 describe('Get employees', () => {
 
   test('succeeds with status code 200 if the endpoint is valid', async () => {
+
     await api
       .get('/api/employees')
       .expect(200);
+
+  });
+
+  test('employees are returned as json', async () => {
+
+    await api
+      .get('/api/employees')
+      .expect('Content-Type', /application\/json/);
+
+  });
+
+  test('return all employees', async () => {
+
+    const response = await api.get('/api/employees');
+    expect(response.body).toHaveLength(initialEmployees.length);
+
+  });
+
+  test('a spesific lastname is within the returned employees', async () => {
+
+    const response = await api.get('/api/employees');
+    const lastnames = response.body.map(emp => emp.lastname);
+    expect(lastnames).toContain('Mustikka');
+
   });
 
 });
