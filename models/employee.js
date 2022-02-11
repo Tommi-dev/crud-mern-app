@@ -51,4 +51,4 @@ employeeShema.set('toJSON', {
 /**
  * Converting a schema to a model and exporting module
  */
-module.exports = mongoose('Employee', employeeShema);
+module.exports = mongoose.model('Employee', employeeShema);
