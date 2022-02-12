@@ -53,4 +53,19 @@ employeesRouter.post('/', async (req, res, next) => {
 
 });
 
+/**
+ * Delete employee
+ */
+employeesRouter.delete('/:id', async (req, res) => {
+
+  await EmployeeModel.findByIdAndDelete(req.params.id)
+    .then(result => {
+      res.status(204).json(result);
+    })
+    .catch(error => {
+      res.status(500).json({ message: error.message });
+    });
+
+});
+
 module.exports = employeesRouter;
