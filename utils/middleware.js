@@ -7,4 +7,10 @@ const errorHandler = (error, request, response, next) => {
   next(error);
 };
 
-module.exports = { errorHandler };
+const unknownEndpoint = (request, response) => {
+
+  response.status(404).send('unkknown endpoint');
+
+};
+
+module.exports = { errorHandler, unknownEndpoint };

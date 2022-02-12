@@ -6,7 +6,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const employeesRouter = require('./routes/employees');
 const morgan = require('morgan');
-const { errorHandler } = require('./utils/middleware');
+const { errorHandler, unknownEndpoint } = require('./utils/middleware');
 
 // Express app
 const app = express();
@@ -46,5 +46,6 @@ app.use('/api/employees', employeesRouter);
  * Middlewares for handling errors
  */
 app.use(errorHandler);
+app.use(unknownEndpoint);
 
 module.exports = app;
