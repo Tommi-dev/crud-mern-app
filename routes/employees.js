@@ -68,4 +68,21 @@ employeesRouter.delete('/:id', async (req, res) => {
 
 });
 
+/**
+ * Update a employee
+ */
+employeesRouter.put('/:id', async (req, res) => {
+
+  const body = req.body;
+
+  await EmployeeModel.findByIdAndUpdate(req.params.id, body, { new: true })
+    .then(result => {
+      res.status(200).json(result);
+    })
+    .catch(error => {
+      return res.status(500).json({ message: error.message });
+    });
+
+});
+
 module.exports = employeesRouter;
