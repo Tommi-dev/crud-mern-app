@@ -171,6 +171,54 @@ describe('Add new customer', () => {
 
 });
 
+describe('Delete employee', () => {
+
+  test('employee deleted if id is valid', async () => {
+
+    const employeesAtStart = await api.get('/api/employees');
+
+    const employeeToDelete = employeesAtStart.body[0];
+
+    await api
+      .delete(`/api/employees/${employeeToDelete.id}`)
+      .expect(204);
+
+    const employeesAtEnd = await api.get('/api/employees');
+
+    expect(employeesAtEnd.body).toHaveLength(
+      employeesAtStart.body.length - 1
+    );
+
+    const lastnames = employeesAtEnd.body.map(emp => emp.lastname);
+
+    expect(lastnames).not.toContain(employeeToDelete.lastname);
+
+  });
+
+  test('employee with invalid id is not deleted', async () => {
+
+    const employeesAtStart = await api.get('/api/employees');
+
+    const employeeToDelete = employeesAtStart.body[0];
+
+    await api
+      .delete('/api/employees/helloworld')
+      .expect(500);
+
+    const employeesAtEnd = await api.get('/api/employees');
+
+    expect(employeesAtEnd.body).toHaveLength(
+      employeesAtStart.body.length
+    );
+
+    const lastnames = employeesAtEnd.body.map(emp => emp.lastname);
+
+    expect(lastnames).toContain(employeeToDelete.lastname);
+
+  });
+
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
