@@ -219,6 +219,31 @@ describe('Delete employee', () => {
 
 });
 
+describe('Update employee', () => {
+
+  test('employee updated if id is valid', async () => {
+
+    const newEmployeeData = {
+      email: 'myNewEmail@email.fi'
+    };
+
+    const employeesAtStart = await api.get('/api/employees');
+
+    const employeeToUpdate = employeesAtStart.body[0];
+
+    await api
+      .put(`/api/employees/${employeeToUpdate.id}`)
+      .send(newEmployeeData)
+      .expect(200);
+
+    const employeesAtEnd = await api.get('/api/employees');
+    const emails = employeesAtEnd.body.map(emp => emp.email);
+    expect(emails).toContain(newEmployeeData.email);
+
+  });
+
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
