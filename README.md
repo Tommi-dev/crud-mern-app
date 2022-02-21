@@ -68,5 +68,5 @@ npm start
   
 ## Screenshots  
   
-<img src="./images/example.png" width="1000" height="auto">  
+<img src="./images/example-1.png" width="1000" height="auto">  
  
