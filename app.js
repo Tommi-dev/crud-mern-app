@@ -27,6 +27,7 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
  * Middlewares for handling request/response objects
  */
 app.use(express.json());
+app.use(express.static('build'));
 app.use(cors());
 
 if (process.env.NODE_ENV !== 'test') {
